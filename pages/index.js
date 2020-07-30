@@ -1,0 +1,27 @@
+import React from "react";
+import "isomorphic-fetch";
+import Link from 'next/link'
+
+const Home = ({ repositories }) => (
+  <div>
+      <Link href="/blog">
+          <a>Blog</a>
+      </Link>
+    {repositories.map((repo) => (
+      <h1 key="repo.id">{repo.name}</h1>
+    ))}
+  </div>
+);
+
+Home.getInitialProps = async () => {
+  const response = await fetch(
+    "https://api.github.com/users/lucassanascimento/repos"
+  );
+  const repositories = await response.json();
+
+  console.log("repositories");
+
+  return { repositories };
+};
+
+export default Home;
